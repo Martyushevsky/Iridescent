@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
 	private void OnValidate()
 	{
-		_mTarget = FindObjectOfType<PlayerController>().transform;
+		//_mTarget = FindObjectOfType<PlayerController>().transform;
 	}
 
 	private void Start()
