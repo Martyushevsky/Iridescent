@@ -1,42 +1,49 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-[RequireComponent(typeof(UnitMotor))]
-public class PlayerController : MonoBehaviour
+namespace Geekbrains
 {
-    [SerializeField] private LayerMask _movementMask;
+	[RequireComponent(typeof(UnitMotor))]
+	public class PlayerController : NetworkBehaviour
+	{
+		[SerializeField] private LayerMask _movementMask;
 
-    private Camera _cam;
-    private UnitMotor _motor;
+		private Character _character;
+		private Camera _cam;
 
-    private void Start()
-    {
-        _cam = Camera.main;
-        _motor = GetComponent<UnitMotor>();
-        _cam.GetComponent<CameraController>().Target = transform;
-    }
+		private void Awake()
+		{
+			_cam = Camera.main;
+		}
+		
+		public void SetCharacter(Character character, bool isLocalPlayer)
+		{
+			_character = character;
+			if (isLocalPlayer) _cam.GetComponent<CameraController>().Target = character.transform;
+		}
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+		private void Update()
+		{
+			if (!isLocalPlayer) return;
+			if (_character == null) return;
+			if (!Input.GetMouseButtonDown(1)) return;
+			var ray = _cam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 100f, _movementMask))
-            {
-                _motor.MoveToPoint(hit.point);
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100f))
-            {
-
-            }
-        }
-    }
+			if (Physics.Raycast(ray, out var hit, 100f, _movementMask))
+			{
+				CmdSetMovePoint(hit.point);
+			}
+		}
+		
+		[Command]
+		public void CmdSetMovePoint(Vector3 point)
+		{
+			_character.SetMovePoint(point);
+		}
+		
+		private void OnDestroy()
+		{
+			if (_character != null) Destroy(_character.gameObject);
+		}
+	}
 }

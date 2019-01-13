@@ -1,14 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.Networking;
-
-public class PlayerStats : NetworkBehaviour
+﻿namespace Geekbrains
 {
-
-    [SerializeField] int maxHealth;
-    [SyncVar] int curHealth;
-
-    public override void OnStartAuthority()
-    {
-        curHealth = maxHealth;
-    }
+	public class PlayerStats : UnitStats
+	{
+	}
 }

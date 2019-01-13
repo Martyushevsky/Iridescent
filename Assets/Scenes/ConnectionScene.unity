@@ -1456,14 +1456,14 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 7381888075520385577, guid: eab14c8a77ccdde41809f416fe5bcc5c,
+  m_PlayerPrefab: {fileID: 1571480409289068, guid: 41417df9e79619346b9a33c05b4fd43c,
     type: 3}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
   m_OfflineScene: ConnectionScene
   m_OnlineScene: WorldVar5
   m_SpawnPrefabs:
-  - {fileID: 15772900, guid: d1d4ac6bc94bde046ae7e48d9a8e0a65, type: 3}
+  - {fileID: 1036302559432277136, guid: 72fd4643bed3f904790a9dc5a0b23ee2, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -13039,7 +13039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4567f8bb8d24a4bace7e6d8cc81449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mTarget: {fileID: 0}
+  _target: {fileID: 0}
   _offset: {x: 1, y: -2, z: 1}
   _zoomSpeed: 5
   _minZoom: 3
