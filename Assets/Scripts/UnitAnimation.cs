@@ -14,7 +14,7 @@ namespace Geekbrains
 			_agent = GetComponentInParent<NavMeshAgent>();
 		}
 
-		private void FixedUpdate()
+		private void Update()
 		{
 			_animator.SetBool("Move", _agent.hasPath);
 		}

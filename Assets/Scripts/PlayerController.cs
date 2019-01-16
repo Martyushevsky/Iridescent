@@ -26,6 +26,20 @@ namespace Geekbrains
 		{
 			if (!isLocalPlayer) return;
 			if (_character == null) return;
+
+			if (Input.GetMouseButtonDown(0))
+			{
+				if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), 
+					out var hitI, 100f, ~(1 << LayerMask.NameToLayer("Player"))))
+				{
+					var interactable = hitI.collider.GetComponent<Interactable>();
+					if (interactable != null)
+					{
+						CmdSetFocus(interactable.GetComponent<NetworkIdentity>());
+					}
+				}
+			}
+
 			if (!Input.GetMouseButtonDown(1)) return;
 			var ray = _cam.ScreenPointToRay(Input.mousePosition);
 
@@ -40,7 +54,13 @@ namespace Geekbrains
 		{
 			_character.SetMovePoint(point);
 		}
-		
+
+		[Command]
+		public void CmdSetFocus(NetworkIdentity newFocus)
+		{
+			_character.SetNewFocus(newFocus.GetComponent<Interactable>());
+		}
+
 		private void OnDestroy()
 		{
 			if (_character != null) Destroy(_character.gameObject);

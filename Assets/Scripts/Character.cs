@@ -36,6 +36,26 @@ namespace Geekbrains
 			}
 		}
 
+		protected override void OnAliveUpdate()
+		{
+			base.OnAliveUpdate();
+			if (Focus == null) return;
+			if (!Focus.HasInteract)
+			{
+				// если с объектом нельзя больше работать, снимаем фокус
+				RemoveFocus();
+			}
+			else
+			{
+				var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
+				if (distance <= Focus.Radius)
+				{
+					// действие, если цель в зоне взаимодействия
+					Focus.Interact(gameObject);
+				}
+			}
+		}
+
 		protected override void Die()
 		{
 			base.Die();
@@ -49,16 +69,23 @@ namespace Geekbrains
 			_gfx.SetActive(true);
 			if (isServer)
 			{
-				motor.MoveToPoint(_startPosition);
+				Motor.MoveToPoint(_startPosition);
 			}
 		}
 
 		public void SetMovePoint(Vector3 point)
 		{
-			if (!isDead)
+			if (!IsDead)
 			{
-				motor.MoveToPoint(point);
+                RemoveFocus();
+				Motor.MoveToPoint(point);
 			}
+		}
+
+		public void SetNewFocus(Interactable newFocus)
+		{
+			if (IsDead) return;
+			if (newFocus.HasInteract) SetFocus(newFocus);
 		}
 	}
 }

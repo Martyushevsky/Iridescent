@@ -9,18 +9,19 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1550747889997104536}
-  - component: {fileID: 6694887880854425471}
+  - component: {fileID: 7970537597567587557}
   - component: {fileID: 4771729396246233408}
   - component: {fileID: 4602221741917851257}
-  - component: {fileID: 7970537597567587557}
+  - component: {fileID: 5493995369416432920}
   - component: {fileID: 6339304529867785058}
   - component: {fileID: 512603716860383271}
-  - component: {fileID: 5493995369416432920}
+  - component: {fileID: 7462499448347127445}
   - component: {fileID: 8742852993072852572}
   - component: {fileID: 552286785372724695}
-  - component: {fileID: 7462499448347127445}
+  - component: {fileID: 7624693442403040955}
+  - component: {fileID: 6636043492432858740}
   - component: {fileID: 312178012001896263}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player Unit Robot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,8 +43,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6694887880854425471
-BoxCollider:
+--- !u!143 &7970537597567587557
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53,8 +54,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 5.2, z: 2}
-  m_Center: {x: 0, y: 2.6, z: 0}
+  m_Height: 5.5
+  m_Radius: 1
+  m_SlopeLimit: 45
+  m_StepOffset: 0.1
+  m_SkinWidth: 0.1
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2.75, z: 0}
 --- !u!195 &4771729396246233408
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -64,7 +70,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1036302559432277136}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 20
   m_Acceleration: 200
   avoidancePriority: 50
@@ -73,7 +79,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 5.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -96,24 +102,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!143 &7970537597567587557
-CharacterController:
+--- !u!114 &5493995369416432920
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036302559432277136}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 0.1
-  m_Radius: 0.1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.1
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 8202817843925131384}
+  m_ParameterSendBits: 0
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &6339304529867785058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 4
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -169,7 +177,7 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &5493995369416432920
+--- !u!114 &7462499448347127445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,17 +186,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1036302559432277136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 01251ca5c16da63468dce7d5582d3b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 8202817843925131384}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
+  InteractionTransform: {fileID: 1550747889997104536}
+  Radius: 6
+  Motor: {fileID: 8742852993072852572}
+  MyStats: {fileID: 552286785372724695}
+  _reviveDelay: 5
+  _gfx: {fileID: 2235283246229136631}
 --- !u!114 &8742852993072852572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,8 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   Damage:
-    _baseValue: 5
---- !u!114 &7462499448347127445
+    _baseValue: 10
+--- !u!114 &7624693442403040955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,13 +231,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1036302559432277136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01251ca5c16da63468dce7d5582d3b39, type: 3}
+  m_Script: {fileID: 11500000, guid: 17b4b988db9c87b45bc1bc6fbf29df82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motor: {fileID: 8742852993072852572}
-  myStats: {fileID: 552286785372724695}
-  _reviveDelay: 5
-  _gfx: {fileID: 2235283246229136631}
+  _attackSpeed: 1
+--- !u!114 &6636043492432858740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036302559432277136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e236ebc49d63fc4fb8f6ceb43334f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8202817843925131384}
+  _unit: {fileID: 7462499448347127445}
+  _combat: {fileID: 7624693442403040955}
 --- !u!114 &312178012001896263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disableBehaviours:
-  - {fileID: 7462499448347127445}
   - {fileID: 4885891899461463676}
 --- !u!1 &2235283246229136631
 GameObject:
@@ -2992,7 +3009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 8202817843925131384}
-  _agent: {fileID: 0}
+  _agent: {fileID: 4771729396246233408}
 --- !u!1 &8202817843999176660
 GameObject:
   m_ObjectHideFlags: 0

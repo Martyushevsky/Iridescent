@@ -3,12 +3,19 @@ using UnityEngine.Networking;
 
 namespace Geekbrains
 {
-	public class Unit : NetworkBehaviour
+	public class Unit : Interactable
 	{
-		[SerializeField] protected UnitMotor motor;
-		[SerializeField] protected UnitStats myStats;
+		[SerializeField] protected UnitMotor Motor;
+		[SerializeField] protected UnitStats MyStats;
 
-		protected bool isDead;
+		protected Interactable Focus;
+
+		protected bool IsDead;
+
+		public delegate void UnitDenegate();
+		[SyncEvent] public event UnitDenegate EventOnDamage;
+		[SyncEvent] public event UnitDenegate EventOnDie;
+		[SyncEvent] public event UnitDenegate EventOnRevive;
 
 		private void Update()
 		{
@@ -26,9 +33,9 @@ namespace Geekbrains
 		protected void OnUpdate()
 		{
 			if (!isServer) return;
-			if (!isDead)
+			if (!IsDead)
 			{
-				if (myStats.CurHealth == 0) Die();
+				if (MyStats.CurHealth == 0) Die();
 				else OnAliveUpdate();
 			}
 			else
@@ -37,12 +44,35 @@ namespace Geekbrains
 			}
 		}
 
+		/// <summary>
+		/// Установка нового объекта в фокус
+		/// </summary>
+		/// <param name="newFocus"></param>
+		protected virtual void SetFocus(Interactable newFocus)
+		{
+			if (newFocus == Focus) return;
+			Focus = newFocus;
+			Motor.FollowTarget(newFocus);
+		}
+
+		/// <summary>
+		/// Удаление фокуса
+		/// </summary>
+		protected virtual void RemoveFocus()
+		{
+			Focus = null;
+			Motor.StopFollowingTarget();
+		}
+
 		[ClientCallback]
 		protected virtual void Die()
 		{
-			isDead = true;
+			IsDead = true;
 			if (!isServer) return;
-			motor.MoveToPoint(transform.position);
+			HasInteract = false; // с объектом нельзя взаимодействовать
+			RemoveFocus();
+			Motor.MoveToPoint(transform.position);
+			EventOnDie?.Invoke();
 			RpcDie();
 		}
 
@@ -55,9 +85,11 @@ namespace Geekbrains
 		[ClientCallback]
 		protected virtual void Revive()
 		{
-			isDead = false;
+			IsDead = false;
 			if (!isServer) return;
-			myStats.SetHealthRate(1);
+			HasInteract = true; // с объектом можно взаимодействовать
+			MyStats.SetHealthRate(1);
+			EventOnRevive?.Invoke();
 			RpcRevive();
 		}
 
@@ -65,6 +97,16 @@ namespace Geekbrains
 		private void RpcRevive()
 		{
 			if (!isServer) Revive();
+		}
+
+		public override bool Interact(GameObject user)
+		{
+			Debug.Log(gameObject.name + " ineracted with " + user.name);
+			var combat = user.GetComponent<Combat>();
+			if (combat == null) return base.Interact(user);
+			if (!combat.Attack(MyStats)) return base.Interact(user);
+			EventOnDamage?.Invoke();
+			return true;
 		}
 	}
 }

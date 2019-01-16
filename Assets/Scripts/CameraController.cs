@@ -6,13 +6,13 @@ namespace Geekbrains
 	{
 		[SerializeField] private Transform _target;
 		[SerializeField] private Vector3 _offset;
-		[SerializeField] private float _zoomSpeed = 4f;
-		[SerializeField] private float _minZoom = 5f;
-		[SerializeField] private float _maxZoom = 15f;
-		[SerializeField] private float _pitch = 2f;
+		[SerializeField] private float _zoomSpeed = 5f;
+		[SerializeField] private float _minZoom = 6f;
+		[SerializeField] private float _maxZoom = 14f;
+		[SerializeField] private float _pitch = 4.5f;
 
 		private Transform _transform;
-		private float _currentZoom = 10f;
+		private float _currentZoom = 14f;
 		private float _currentRot = 0f;
 		private float _prevMouseX;
 

@@ -13,7 +13,7 @@ namespace Geekbrains
 
 		private void Start()
 		{
-			Debug.Log($"{nameof(isServer)} =  {isServer}");
+			//Debug.Log($"{nameof(isServer)} =  {isServer}");
 		}
 
 		public override void OnStartAuthority()

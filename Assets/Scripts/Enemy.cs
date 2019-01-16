@@ -48,7 +48,39 @@ namespace Geekbrains
 		protected override void OnAliveUpdate()
 		{
 			base.OnAliveUpdate();
-			Wandering(Time.deltaTime);
+			if (Focus == null)
+			{
+				// блуждание
+				Wandering(Time.deltaTime);
+				// поиск цели если монстр агресивный
+				if (_aggressive) FindEnemy();
+			}
+			else
+			{
+				var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
+				if (distance > _viewDistance || !Focus.HasInteract)
+				{
+					// если цель далеко перестаём приследовать
+					RemoveFocus();
+				}
+				else if (distance <= Focus.Radius)
+				{
+					// действие если цель взоне взаимодействия
+					Focus.Interact(gameObject);
+				}
+			}
+		}
+
+		private void FindEnemy()
+		{
+			var colliders = Physics.OverlapSphere(transform.position, _viewDistance, 1 << LayerMask.NameToLayer("Player"));
+			foreach (var t in colliders)
+			{
+				var interactable = t.GetComponent<Interactable>();
+				if (interactable == null || !interactable.HasInteract) continue;
+				SetFocus(interactable);
+				break;
+			}
 		}
 
 		protected override void Revive()
@@ -57,8 +89,16 @@ namespace Geekbrains
 			transform.position = _startPosition;
 			if (isServer)
 			{
-				motor.MoveToPoint(_startPosition);
+				Motor.MoveToPoint(_startPosition);
 			}
+		}
+
+		public override bool Interact(GameObject user)
+		{
+			if (!base.Interact(user)) return false;
+			SetFocus(user.GetComponent<Interactable>());
+			return true;
+
 		}
 
 		private void Wandering(float deltaTime)
@@ -72,7 +112,14 @@ namespace Geekbrains
 		private void RandomMove()
 		{
 			_curDistanation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up) * new Vector3(_moveRadius, 0, 0) + _startPosition;
-			motor.MoveToPoint(_curDistanation);
+			Motor.MoveToPoint(_curDistanation);
+		}
+
+		protected override void OnDrawGizmosSelected()
+		{
+			base.OnDrawGizmosSelected();
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(transform.position, _viewDistance);
 		}
 	}
 }

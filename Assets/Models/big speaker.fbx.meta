@@ -29,7 +29,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material
-    second: {fileID: 2100000, guid: a6f71973151c45e48be5f6aec50082e4, type: 2}
+    second: {fileID: 2100000, guid: e0fc37f8c9af4404291b70a2422f6192, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -91,7 +91,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
