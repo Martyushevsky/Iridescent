@@ -5,49 +5,53 @@ namespace Geekbrains
 {
 	public class PlayerLoader : NetworkBehaviour
 	{
-		[SerializeField] GameObject _unitPrefab;
-		[SerializeField] PlayerController _controller;
+		[SerializeField] GameObject unitPrefab;
+		[SerializeField] PlayerController controller;
 
-		[SyncVar(hook = nameof(HookUnitIdentity))] NetworkIdentity _unitIdentity;
-
-
-		private void Start()
-		{
-			//Debug.Log($"{nameof(isServer)} =  {isServer}");
-		}
+		[SyncVar(hook = "HookUnitIdentity")] NetworkIdentity unitIdentity;
 
 		public override void OnStartAuthority()
 		{
 			if (isServer)
 			{
-				SpawnPlayer(true);
+				Character character = CreateCharacter();
+				controller.SetCharacter(character, true);
+				InventoryUI.Instance.SetInventory(character.Inventory);
 			}
-			else
-			{
-				CmdCreatePlayer();
-			}
+			else CmdCreatePlayer();
 		}
 
 		[Command]
 		public void CmdCreatePlayer()
 		{
-			SpawnPlayer(false);
+			controller.SetCharacter(CreateCharacter(), false);
 		}
 
 		[ClientCallback]
-		private void HookUnitIdentity(NetworkIdentity unit)
+		void HookUnitIdentity(NetworkIdentity unit)
 		{
-			if (!isLocalPlayer) return;
-			_unitIdentity = unit;
-			_controller.SetCharacter(unit.GetComponent<Character>(), true);
+			if (isLocalPlayer)
+			{
+				unitIdentity = unit;
+				Character character = unit.GetComponent<Character>();
+				controller.SetCharacter(character, true);
+				character.SetInventory(GetComponent<Inventory>());
+				InventoryUI.Instance.SetInventory(character.Inventory);
+			}
 		}
 
-		public void SpawnPlayer(bool isLocalPlayer)
+		public Character CreateCharacter()
 		{
-			var unit = Instantiate(_unitPrefab, transform.position, Quaternion.identity);
+			GameObject unit = Instantiate(unitPrefab);
 			NetworkServer.Spawn(unit);
-			_unitIdentity = unit.GetComponent<NetworkIdentity>();
-			_controller.SetCharacter(unit.GetComponent<Character>(), isLocalPlayer);
+			unitIdentity = unit.GetComponent<NetworkIdentity>();
+			unit.GetComponent<Character>().SetInventory(GetComponent<Inventory>());
+			return unit.GetComponent<Character>();
+		}
+
+		public override bool OnCheckObserver(NetworkConnection connection)
+		{
+			return false;
 		}
 	}
 }

@@ -8,8 +8,9 @@ namespace Geekbrains
 		[SerializeField] float _reviveDelay = 5f;
 		[SerializeField] GameObject _gfx;
 
-		Vector3 _startPosition;
-		float _reviveTime;
+		private Vector3 _startPosition;
+		private float _reviveTime;
+		public Inventory Inventory;
 
 		void Start()
 		{
@@ -42,7 +43,6 @@ namespace Geekbrains
 			if (Focus == null) return;
 			if (!Focus.HasInteract)
 			{
-				// если с объектом нельзя больше работать, снимаем фокус
 				RemoveFocus();
 			}
 			else
@@ -50,8 +50,7 @@ namespace Geekbrains
 				var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
 				if (distance <= Focus.Radius)
 				{
-					// действие, если цель в зоне взаимодействия
-					Focus.Interact(gameObject);
+					if (!Focus.Interact(gameObject)) RemoveFocus();
 				}
 			}
 		}
@@ -77,9 +76,15 @@ namespace Geekbrains
 		{
 			if (!IsDead)
 			{
-                RemoveFocus();
+				RemoveFocus();
 				Motor.MoveToPoint(point);
 			}
+		}
+
+		public void SetInventory(Inventory inventory)
+		{
+			Inventory = inventory;
+			inventory.DropPoint = transform;
 		}
 
 		public void SetNewFocus(Interactable newFocus)

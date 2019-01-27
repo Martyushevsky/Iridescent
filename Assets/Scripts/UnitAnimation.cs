@@ -14,9 +14,9 @@ namespace Geekbrains
 			_agent = GetComponentInParent<NavMeshAgent>();
 		}
 
-		private void Update()
+		private void FixedUpdate()
 		{
-			_animator.SetBool("Move", _agent.hasPath);
+			_animator.SetBool("Move", _agent.velocity.magnitude != 0);
 		}
 
 		//Placeholder functions for Animation events

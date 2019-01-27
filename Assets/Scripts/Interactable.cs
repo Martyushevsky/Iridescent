@@ -13,12 +13,7 @@ namespace Geekbrains
 			InteractionTransform = transform;
 		}
 
-        private void Start()
-        {
-            InteractionTransform = transform;
-        }
-
-        public bool HasInteract { get; protected set; } = true;
+		public bool HasInteract { get; protected set; } = true;
 
 		public virtual bool Interact(GameObject user) => false;
 

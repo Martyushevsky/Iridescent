@@ -102,11 +102,16 @@ namespace Geekbrains
 		public override bool Interact(GameObject user)
 		{
 			Debug.Log(gameObject.name + " ineracted with " + user.name);
-			var combat = user.GetComponent<Combat>();
-			if (combat == null) return base.Interact(user);
-			if (!combat.Attack(MyStats)) return base.Interact(user);
-			EventOnDamage?.Invoke();
-			return true;
+			Combat combat = user.GetComponent<Combat>();
+			if (combat != null)
+			{
+				if (combat.Attack(MyStats))
+				{
+					EventOnDamage?.Invoke();
+				}
+				return true;
+			}
+			return base.Interact(user);
 		}
 	}
 }
