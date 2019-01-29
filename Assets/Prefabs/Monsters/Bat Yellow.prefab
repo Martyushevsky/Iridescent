@@ -1490,6 +1490,7 @@ GameObject:
   - component: {fileID: 2439956902110541161}
   - component: {fileID: 423306236074925554}
   - component: {fileID: 7047011271629591155}
+  - component: {fileID: 9136997690113519390}
   m_Layer: 0
   m_Name: Bat Yellow
   m_TagString: Untagged
@@ -1692,7 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b1481e5d591424aa76d7d8b7f2a071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 60
+  _maxHealth: 50
   Damage:
     _baseValue: 3
 --- !u!114 &2439956902110541161
@@ -1737,6 +1738,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disableBehaviours:
   - {fileID: 4755682562934410720}
+--- !u!114 &9136997690113519390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924259670301606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2d08037d44bc145897d02f144bbeb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropItems:
+  - Item: {fileID: 11400000, guid: 729b1781176eb394b99cc9f8b4b97721, type: 2}
+    Rate: 75
+  - Item: {fileID: 11400000, guid: 5611b2163e9db064b89a932f676d95b4, type: 2}
+    Rate: 75
+  - Item: {fileID: 11400000, guid: 313dce183cc451e43bed1f71d9f39087, type: 2}
+    Rate: 75
 --- !u!1 &1992609603053092
 GameObject:
   m_ObjectHideFlags: 0

@@ -195,6 +195,7 @@ MonoBehaviour:
   MyStats: {fileID: 552286785372724695}
   _reviveDelay: 5
   _gfx: {fileID: 2235283246229136631}
+  Player: {fileID: 0}
 --- !u!114 &8742852993072852572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   Damage:
-    _baseValue: 10
+    _baseValue: 20
 --- !u!114 &7624693442403040955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -68,6 +68,7 @@ namespace Geekbrains
 		protected virtual void Die()
 		{
 			IsDead = true;
+			GetComponent<Collider>().enabled = false;
 			if (!isServer) return;
 			HasInteract = false; // с объектом нельзя взаимодействовать
 			RemoveFocus();
@@ -86,6 +87,7 @@ namespace Geekbrains
 		protected virtual void Revive()
 		{
 			IsDead = false;
+			GetComponent<Collider>().enabled = true;
 			if (!isServer) return;
 			HasInteract = true; // с объектом можно взаимодействовать
 			MyStats.SetHealthRate(1);

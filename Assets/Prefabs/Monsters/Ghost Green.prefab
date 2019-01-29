@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 2799430934072541150}
   - component: {fileID: 5805137286477494061}
   - component: {fileID: 114051401886405744}
+  - component: {fileID: 3238937441097433647}
   m_Layer: 0
   m_Name: Ghost Green
   m_TagString: Untagged
@@ -714,9 +715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b1481e5d591424aa76d7d8b7f2a071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 60
+  _maxHealth: 50
   Damage:
-    _baseValue: 10
+    _baseValue: 5
 --- !u!114 &2799430934072541150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,3 +760,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disableBehaviours:
   - {fileID: 5383272646258569359}
+--- !u!114 &3238937441097433647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922813405114554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2d08037d44bc145897d02f144bbeb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropItems:
+  - Item: {fileID: 11400000, guid: c967808ab9aaf8b40825015a276adb6c, type: 2}
+    Rate: 50
+  - Item: {fileID: 11400000, guid: cf58b559fdae0fa48ae99e3049992b8c, type: 2}
+    Rate: 50

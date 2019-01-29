@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Geekbrains
 {
 	public class Inventory : NetworkBehaviour
 	{
-		public Transform DropPoint;
+		public Player Player;
 		public int Space = 20;
 		public event SyncList<Item>.SyncListChanged OnItemChanged;
 
@@ -22,7 +21,7 @@ namespace Geekbrains
 			OnItemChanged?.Invoke(op, itemIndex);
 		}
 
-		public bool Add(Item item)
+		public bool AddItem(Item item)
 		{
 			if (Items.Count < Space)
 			{
@@ -33,13 +32,27 @@ namespace Geekbrains
 			return false;
 		}
 
-		public void Remove(Item item)
+		public void UseItem(Item item)
 		{
-			CmdRemoveItem(Items.IndexOf(item));
+			CmdUseItem(Items.IndexOf(item));
 		}
 
 		[Command]
-		void CmdRemoveItem(int index)
+		void CmdUseItem(int index)
+		{
+			if (Items[index] != null)
+			{
+				Items[index].Use(Player);
+			}
+		}
+
+		public void DropItem(Item item)
+		{
+			CmdDropItem(Items.IndexOf(item));
+		}
+
+		[Command]
+		void CmdDropItem(int index)
 		{
 			if (Items[index] == null) return;
 			Drop(Items[index]);
@@ -48,9 +61,15 @@ namespace Geekbrains
 
 		private void Drop(Item item)
 		{
-			var pickupItem = Instantiate(item.PickupPrefab, DropPoint.position, Quaternion.Euler(0, Random.Range(0, 360f), 0));
+			var pickupItem = Instantiate(item.PickupPrefab, Player.Character.transform.position, 
+				Quaternion.Euler(0, Random.Range(0, 360f), 0));
 			pickupItem.Item = item;
 			NetworkServer.Spawn(pickupItem.gameObject);
+		}
+
+		public void RemoveItem(Item item)
+		{
+			Items.Remove(item);
 		}
 	}
 }

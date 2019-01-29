@@ -10,7 +10,8 @@ namespace Geekbrains
 
 		private Vector3 _startPosition;
 		private float _reviveTime;
-		public Inventory Inventory;
+
+		public Player Player;
 
 		void Start()
 		{
@@ -80,13 +81,7 @@ namespace Geekbrains
 				Motor.MoveToPoint(point);
 			}
 		}
-
-		public void SetInventory(Inventory inventory)
-		{
-			Inventory = inventory;
-			inventory.DropPoint = transform;
-		}
-
+		
 		public void SetNewFocus(Interactable newFocus)
 		{
 			if (IsDead) return;

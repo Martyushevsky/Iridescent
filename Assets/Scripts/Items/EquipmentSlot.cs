@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 namespace Geekbrains
 {
-	public class InventorySlot : MonoBehaviour
+	public class EquipmentSlot : MonoBehaviour
 	{
 		public Image Icon;
-		public Button RemoveButton;
-		public Inventory Inventory;
+		public Button UnequipButton;
+		public Equipment Equipment;
 
 		private Item _item;
 
@@ -16,7 +16,7 @@ namespace Geekbrains
 			_item = newItem;
 			Icon.sprite = _item.Icon;
 			Icon.enabled = true;
-			RemoveButton.interactable = true;
+			UnequipButton.interactable = true;
 		}
 
 		public void ClearSlot()
@@ -24,17 +24,12 @@ namespace Geekbrains
 			_item = null;
 			Icon.sprite = null;
 			Icon.enabled = false;
-			RemoveButton.interactable = false;
+			UnequipButton.interactable = false;
 		}
 
-		public void OnRemoveButton()
+		public void Unequip()
 		{
-			Inventory.DropItem(_item);
-		}
-
-		public void UseItem()
-		{
-			if (_item != null) Inventory.UseItem(_item);
+			Equipment.UnequipItem(_item);
 		}
 	}
 }

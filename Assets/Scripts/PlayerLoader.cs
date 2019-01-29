@@ -5,53 +5,56 @@ namespace Geekbrains
 {
 	public class PlayerLoader : NetworkBehaviour
 	{
-		[SerializeField] GameObject unitPrefab;
-		[SerializeField] PlayerController controller;
+		[SerializeField] private GameObject _unitPrefab;
+		[SerializeField] private PlayerController _controller;
+		[SerializeField] private Player _player;
 
-		[SyncVar(hook = "HookUnitIdentity")] NetworkIdentity unitIdentity;
+		[SyncVar(hook = nameof(HookUnitIdentity))]
+		private NetworkIdentity _unitIdentity;
 
 		public override void OnStartAuthority()
 		{
 			if (isServer)
 			{
-				Character character = CreateCharacter();
-				controller.SetCharacter(character, true);
-				InventoryUI.Instance.SetInventory(character.Inventory);
+				var character = CreateCharacter();
+				_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
+				_controller.SetCharacter(character, true);
 			}
-			else CmdCreatePlayer();
+			else
+			{
+				CmdCreatePlayer();
+			}
 		}
 
 		[Command]
 		public void CmdCreatePlayer()
 		{
-			controller.SetCharacter(CreateCharacter(), false);
+			var character = CreateCharacter();
+			_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), false);
+			_controller.SetCharacter(character, false);
 		}
 
 		[ClientCallback]
-		void HookUnitIdentity(NetworkIdentity unit)
+		private void HookUnitIdentity(NetworkIdentity unit)
 		{
 			if (isLocalPlayer)
 			{
-				unitIdentity = unit;
-				Character character = unit.GetComponent<Character>();
-				controller.SetCharacter(character, true);
-				character.SetInventory(GetComponent<Inventory>());
-				InventoryUI.Instance.SetInventory(character.Inventory);
+				_unitIdentity = unit;
+				var character = unit.GetComponent<Character>();
+				//_controller.SetCharacter(character, true);
+				_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
+				_controller.SetCharacter(character, true);
 			}
 		}
 
 		public Character CreateCharacter()
 		{
-			GameObject unit = Instantiate(unitPrefab);
+			var unit = Instantiate(_unitPrefab);
 			NetworkServer.Spawn(unit);
-			unitIdentity = unit.GetComponent<NetworkIdentity>();
-			unit.GetComponent<Character>().SetInventory(GetComponent<Inventory>());
+			_unitIdentity = unit.GetComponent<NetworkIdentity>();
 			return unit.GetComponent<Character>();
 		}
 
-		public override bool OnCheckObserver(NetworkConnection connection)
-		{
-			return false;
-		}
+		public override bool OnCheckObserver(NetworkConnection connection) => false;
 	}
 }
