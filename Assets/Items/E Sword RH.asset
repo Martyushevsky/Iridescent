@@ -17,6 +17,6 @@ MonoBehaviour:
   PickupPrefab: {fileID: 7773569367858041839, guid: f05e5b5698f4e7741a898927df5f6109,
     type: 3}
   EquipSlot: 3
-  DamageModifier: 0
+  DamageModifier: 10
   ArmorModifier: 0
   SpeedModifier: 0

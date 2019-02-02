@@ -11,6 +11,8 @@ namespace Geekbrains
 		private Vector3 _startPosition;
 		private float _reviveTime;
 
+		public new PlayerStats Stats => _stats as PlayerStats;
+
 		public Player Player;
 
 		void Start()

@@ -9,6 +9,8 @@ namespace Geekbrains
 		[SyncVar] private int _curHealth;
 
 		public Stat Damage;
+		public Stat Armor; // защита
+		public Stat MoveSpeed; // скорость перемещения
 
 		public int CurHealth => _curHealth;
 
@@ -19,10 +21,14 @@ namespace Geekbrains
 
 		public virtual void TakeDamage(int damage)
 		{
-			_curHealth -= damage;
-			if (_curHealth <= 0)
+			damage -= Armor.GetValue();
+			if (damage > 0)
 			{
-				_curHealth = 0;
+				_curHealth -= damage;
+				if (_curHealth <= 0)
+				{
+					_curHealth = 0;
+				}
 			}
 		}
 

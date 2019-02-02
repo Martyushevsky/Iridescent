@@ -192,7 +192,7 @@ MonoBehaviour:
   InteractionTransform: {fileID: 1550747889997104536}
   Radius: 6
   Motor: {fileID: 8742852993072852572}
-  MyStats: {fileID: 552286785372724695}
+  _stats: {fileID: 552286785372724695}
   _reviveDelay: 5
   _gfx: {fileID: 2235283246229136631}
   Player: {fileID: 0}
@@ -222,6 +222,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   Damage:
+    _baseValue: 20
+  Armor:
+    _baseValue: 0
+  MoveSpeed:
     _baseValue: 20
 --- !u!114 &7624693442403040955
 MonoBehaviour:

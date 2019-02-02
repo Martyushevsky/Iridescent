@@ -684,7 +684,7 @@ MonoBehaviour:
   InteractionTransform: {fileID: 4346772114021060}
   Radius: 6
   Motor: {fileID: 114164667048318260}
-  MyStats: {fileID: 114748287497134970}
+  _stats: {fileID: 114748287497134970}
   _moveRadius: 10
   _minMoveDelay: 1
   _maxMoveDelay: 3
@@ -718,6 +718,10 @@ MonoBehaviour:
   _maxHealth: 50
   Damage:
     _baseValue: 5
+  Armor:
+    _baseValue: 0
+  MoveSpeed:
+    _baseValue: 10
 --- !u!114 &2799430934072541150
 MonoBehaviour:
   m_ObjectHideFlags: 0

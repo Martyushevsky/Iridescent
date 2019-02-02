@@ -27,11 +27,13 @@ namespace Geekbrains
 				if (((EquipmentItem)items[i]).EquipSlot == item.EquipSlot)
 				{
 					oldItem = (EquipmentItem)items[i];
+					oldItem.Unequip(Player); 
 					items.RemoveAt(i);
 					break;
 				}
 			}
 			items.Add(item);
+			item.Equip(Player);
 			return oldItem;
 		}
 
@@ -45,6 +47,7 @@ namespace Geekbrains
 		{
 			if (items[index] != null && Player.Inventory.AddItem(items[index]))
 			{
+				((EquipmentItem)items[index]).Unequip(Player);
 				items.RemoveAt(index);
 			}
 		}

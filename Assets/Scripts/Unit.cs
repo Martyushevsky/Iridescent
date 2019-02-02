@@ -6,7 +6,10 @@ namespace Geekbrains
 	public class Unit : Interactable
 	{
 		[SerializeField] protected UnitMotor Motor;
-		[SerializeField] protected UnitStats MyStats;
+		[SerializeField] protected UnitStats _stats;
+
+		public UnitStats Stats => _stats;
+
 
 		protected Interactable Focus;
 
@@ -16,6 +19,12 @@ namespace Geekbrains
 		[SyncEvent] public event UnitDenegate EventOnDamage;
 		[SyncEvent] public event UnitDenegate EventOnDie;
 		[SyncEvent] public event UnitDenegate EventOnRevive;
+
+		public override void OnStartServer()
+		{
+			Motor.SetMoveSpeed(_stats.MoveSpeed.GetValue());
+			_stats.MoveSpeed.OnStatChanged += Motor.SetMoveSpeed;
+		}
 
 		private void Update()
 		{
@@ -35,7 +44,7 @@ namespace Geekbrains
 			if (!isServer) return;
 			if (!IsDead)
 			{
-				if (MyStats.CurHealth == 0) Die();
+				if (_stats.CurHealth == 0) Die();
 				else OnAliveUpdate();
 			}
 			else
@@ -90,7 +99,7 @@ namespace Geekbrains
 			GetComponent<Collider>().enabled = true;
 			if (!isServer) return;
 			HasInteract = true; // с объектом можно взаимодействовать
-			MyStats.SetHealthRate(1);
+			_stats.SetHealthRate(1);
 			EventOnRevive?.Invoke();
 			RpcRevive();
 		}
@@ -107,7 +116,7 @@ namespace Geekbrains
 			Combat combat = user.GetComponent<Combat>();
 			if (combat != null)
 			{
-				if (combat.Attack(MyStats))
+				if (combat.Attack(_stats))
 				{
 					EventOnDamage?.Invoke();
 				}

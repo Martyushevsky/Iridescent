@@ -18,5 +18,5 @@ MonoBehaviour:
     type: 3}
   EquipSlot: 4
   DamageModifier: 0
-  ArmorModifier: 0
+  ArmorModifier: 5
   SpeedModifier: 0

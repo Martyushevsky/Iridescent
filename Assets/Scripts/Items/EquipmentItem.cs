@@ -18,6 +18,28 @@ namespace Geekbrains
 			if (oldItem != null) player.Inventory.AddItem(oldItem);
 			base.Use(player);
 		}
+
+		public virtual void Equip(Player player)
+		{
+			if (player != null)
+			{
+				UnitStats stats = player.Character.Stats;
+				stats.Damage.AddModifier(DamageModifier);
+				stats.Armor.AddModifier(ArmorModifier);
+				stats.MoveSpeed.AddModifier(SpeedModifier);
+			}
+		}
+
+		public virtual void Unequip(Player player)
+		{
+			if (player != null)
+			{
+				UnitStats stats = player.Character.Stats;
+				stats.Damage.RemoveModifier(DamageModifier);
+				stats.Armor.RemoveModifier(ArmorModifier);
+				stats.MoveSpeed.RemoveModifier(SpeedModifier);
+			}
+		}
 	}
 
 	public enum EquipmentSlotType { Head, Chest, Legs, RighHand, LeftHand }
