@@ -1482,8 +1482,8 @@ GameObject:
   - component: {fileID: 195495141529583300}
   - component: {fileID: 95264436600154928}
   - component: {fileID: 114386657785475982}
-  - component: {fileID: 114384874233440878}
   - component: {fileID: 114812597912962150}
+  - component: {fileID: 114384874233440878}
   - component: {fileID: 1812848845012072603}
   - component: {fileID: 2744256023299321846}
   - component: {fileID: 2075557319660486720}
@@ -1592,28 +1592,6 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
---- !u!114 &114384874233440878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1924259670301606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 4
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114812597912962150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,6 +1625,28 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114384874233440878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924259670301606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 4
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &1812848845012072603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,6 +1669,7 @@ MonoBehaviour:
   _aggressive: 0
   _viewDistance: 10
   _reviveDelay: 5
+  _rewardExp: 10
 --- !u!114 &2744256023299321846
 MonoBehaviour:
   m_ObjectHideFlags: 0

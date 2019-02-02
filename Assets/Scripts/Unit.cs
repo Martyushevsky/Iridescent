@@ -10,7 +10,6 @@ namespace Geekbrains
 
 		public UnitStats Stats => _stats;
 
-
 		protected Interactable Focus;
 
 		protected bool IsDead;
@@ -118,11 +117,16 @@ namespace Geekbrains
 			{
 				if (combat.Attack(_stats))
 				{
-					EventOnDamage?.Invoke();
+					DamageWithCombat(user);
 				}
 				return true;
 			}
 			return base.Interact(user);
+		}
+
+		protected virtual void DamageWithCombat(GameObject user)
+		{
+			EventOnDamage?.Invoke();
 		}
 	}
 }

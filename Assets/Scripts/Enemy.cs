@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Geekbrains
 {
@@ -17,7 +18,31 @@ namespace Geekbrains
 		[SerializeField] private bool _aggressive;
 		[SerializeField] private float _viewDistance = 5f;
 		[SerializeField] private float _reviveDelay = 5f;
+		// награда за убийство
+		[SerializeField] private float _rewardExp;
+
+		// список персонажей, атаковавших монстра
+		private List<Character> _enemies = new List<Character>();
 		private float _reviveTime;
+
+		protected override void DamageWithCombat(GameObject user)
+		{
+			base.DamageWithCombat(user);
+			var character = user.GetComponent<Character>();
+			if (character != null && !_enemies.Contains(character))
+				_enemies.Add(character);
+		}
+
+		protected override void Die()
+		{
+			base.Die();
+			if (!isServer) return;
+			foreach (var enemie in _enemies)
+			{
+				enemie.Player.Progress.AddExp(_rewardExp / _enemies.Count);
+			}
+			_enemies.Clear();
+		}
 
 		private void Start()
 		{

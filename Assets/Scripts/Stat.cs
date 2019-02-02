@@ -10,6 +10,15 @@ namespace Geekbrains
 		public event StatChanged OnStatChanged;
 
 		[SerializeField] private int _baseValue;
+		public int BaseValue
+		{
+			get => _baseValue;
+			set
+			{
+				_baseValue = value;
+				OnStatChanged?.Invoke(GetValue());
+			}
+		}
 
 		private readonly List<int> _modifiers = new List<int>();
 

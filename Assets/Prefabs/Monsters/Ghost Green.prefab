@@ -691,6 +691,7 @@ MonoBehaviour:
   _aggressive: 0
   _viewDistance: 10
   _reviveDelay: 5
+  _rewardExp: 20
 --- !u!114 &114164667048318260
 MonoBehaviour:
   m_ObjectHideFlags: 0

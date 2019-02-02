@@ -8,13 +8,14 @@ namespace Geekbrains
 		[SerializeField] private int _maxHealth;
 		[SyncVar] private int _curHealth;
 
-		public Stat Damage;
+        public Stat Damage;
 		public Stat Armor; // защита
 		public Stat MoveSpeed; // скорость перемещения
 
-		public int CurHealth => _curHealth;
+        public int CurHealth => _curHealth;
+        public int MaxHealth => _maxHealth;
 
-		public override void OnStartServer()
+        public override void OnStartServer()
 		{
 			SetHealthRate(1);
 		}
