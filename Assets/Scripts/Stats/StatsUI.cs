@@ -30,14 +30,6 @@ namespace Geekbrains
         [SerializeField] private Slider _expSlider;
         [SerializeField] private Slider _healthSlider;
 
-        // установка возможности апгрейда для всех статов
-        private void SetUpgradableStats(bool active)
-        {
-            _damageStat.SetUpgradable(active);
-            _armorStat.SetUpgradable(active);
-            _moveSpeedStat.SetUpgradable(active);
-        }
-
         private StatsManager _manager;
         private int _curDamage, _curArmor, _curMoveSpeed;
         private int _curLevel, _curStatPoints;
@@ -59,8 +51,10 @@ namespace Geekbrains
                 CheckManagerChanges();
 
                 _curHealth = _manager.Player.Character.Stats.CurHealth;
-                _maxHealth = _manager.Player.Character.Stats.MaxHealth;
                 _healthSlider.value = _curHealth / _maxHealth;
+                Debug.Log(_curHealth);
+                Debug.Log(_manager.Player.Character.Stats.CurHealth);
+                Debug.Log(_healthSlider.value);
             }
         }
 
@@ -70,6 +64,10 @@ namespace Geekbrains
             CheckManagerChanges();
 
             _expSlider.value = _manager.Exp / _manager.NextLevelExp;
+
+            _curHealth = _manager.Player.Character.Stats.CurHealth;
+            _maxHealth = _manager.Player.Character.Stats.MaxHealth;
+            _healthSlider.value = _curHealth / _maxHealth;
         }
 
         private void CheckManagerChanges()
@@ -112,6 +110,14 @@ namespace Geekbrains
                 _statPointsText.text = _curStatPoints.ToString();
                 SetUpgradableStats(_curStatPoints > 0);
             }
+        }
+
+        // установка возможности апгрейда для всех статов
+        private void SetUpgradableStats(bool active)
+        {
+            _damageStat.SetUpgradable(active);
+            _armorStat.SetUpgradable(active);
+            _moveSpeedStat.SetUpgradable(active);
         }
 
         public void UpgradeStat(StatItem stat)

@@ -29975,6 +29975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 798958590}
+  healthBar: {fileID: 73342206}
 --- !u!1001 &566986852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104347,6 +104348,11 @@ PrefabInstance:
     - target: {fileID: 4346772114021060, guid: 6531954ec5d6c40479007f285a060dd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114748287497134970, guid: 6531954ec5d6c40479007f285a060dd9,
+        type: 3}
+      propertyPath: Damage._baseValue
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6531954ec5d6c40479007f285a060dd9, type: 3}

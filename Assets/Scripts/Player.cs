@@ -19,6 +19,7 @@ namespace Geekbrains
 
         public void Setup(Character character, Inventory inventory, Equipment equipment, bool isLocalPlayer)
         {
+            Debug.Log("setup");
             _statsManager = GetComponent<StatsManager>();
             _progress = GetComponent<PlayerProgress>();
             _character = character;
@@ -43,6 +44,7 @@ namespace Geekbrains
 
             if (isLocalPlayer)
             {
+                Debug.Log("local");
                 InventoryUI.Instance.SetInventory(_inventory);
                 EquipmentUI.Instance.SetEquipment(_equipment);
                 StatsUI.instance.SetManager(_statsManager);

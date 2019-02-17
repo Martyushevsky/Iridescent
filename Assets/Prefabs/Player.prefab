@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 252}
+  - component: {fileID: 441}
+  - component: {fileID: 457}
   - component: {fileID: 427}
   - component: {fileID: 426}
   - component: {fileID: 428}
   - component: {fileID: 442}
   - component: {fileID: 437}
-  - component: {fileID: 441}
   - component: {fileID: 436}
-  - component: {fileID: 457}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -38,6 +38,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca72810dff5f2074c8e2c42d0a0ac02f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statsManager: {fileID: 0}
+  _progress: {fileID: 0}
+  _character: {fileID: 0}
+  _inventory: {fileID: 0}
+  _equipment: {fileID: 0}
+--- !u!114 &457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9247d8258d79543b17db73e18feb46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,23 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
---- !u!114 &441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca72810dff5f2074c8e2c42d0a0ac02f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _statsManager: {fileID: 0}
-  _progress: {fileID: 0}
-  _character: {fileID: 0}
-  _inventory: {fileID: 0}
-  _equipment: {fileID: 0}
 --- !u!114 &436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,15 +177,3 @@ MonoBehaviour:
   Exp: 0
   NextLevelExp: 0
   Player: {fileID: 0}
---- !u!114 &457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9247d8258d79543b17db73e18feb46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
