@@ -31,6 +31,12 @@ namespace Geekbrains
 
             if (GetComponent<NetworkIdentity>().isServer)
             {
+                UserAccount account = AccountManager.GetAccount(GetComponent<NetworkIdentity>().connectionToClient);
+                _character.Stats.Load(account.data);
+                _progress.Load(account.data);
+                _inventory.Load(account.data);
+                _equipment.Load(account.data);
+
                 _character.Stats.Manager = _statsManager;
                 _progress.Manager = _statsManager;
             }

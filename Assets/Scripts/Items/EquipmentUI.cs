@@ -51,7 +51,7 @@ namespace Geekbrains
 		public void SetEquipment(Equipment newEquipment)
 		{
 			_equipment = newEquipment;
-			_equipment.onItemChanged += ItemChanged;
+			_equipment.OnItemChanged += ItemChanged;
 			foreach (var slot in _slots)
 			{
 				if (slot != null)
@@ -70,7 +70,7 @@ namespace Geekbrains
 				slot.ClearSlot();
 			}
 
-			foreach (var item in _equipment.items)
+			foreach (var item in _equipment.Items)
 			{
 				_slots[(int)((EquipmentItem)item).EquipSlot].SetItem(item);
 			}

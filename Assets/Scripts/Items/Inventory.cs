@@ -3,73 +3,86 @@ using UnityEngine.Networking;
 
 namespace Geekbrains
 {
-	public class Inventory : NetworkBehaviour
-	{
-		public Player Player;
-		public int Space = 20;
-		public event SyncList<Item>.SyncListChanged OnItemChanged;
+    public class Inventory : NetworkBehaviour
+    {
+        public Player Player;
+        public int Space = 20;
 
-		public SyncListItem Items = new SyncListItem();
+        public event SyncList<Item>.SyncListChanged OnItemChanged;
+        public SyncListItem Items = new SyncListItem();
 
-		public override void OnStartLocalPlayer()
-		{
-			Items.Callback += ItemChanged;
-		}
+        private UserData data;
 
-		private void ItemChanged(SyncList<Item>.Operation op, int itemIndex)
-		{
-			OnItemChanged?.Invoke(op, itemIndex);
-		}
+        public void Load(UserData data)
+        {
+            this.data = data;
+            for (int i = 0; i < data.inventory.Count; i++)
+            {
+                Items.Add(ItemBase.GetItem(data.inventory[i]));
+            }
+        }
 
-		public bool AddItem(Item item)
-		{
-			if (Items.Count < Space)
-			{
-				Items.Add(item);
-				return true;
-			}
+        public override void OnStartLocalPlayer()
+        {
+            Items.Callback += ItemChanged;
+        }
 
-			return false;
-		}
+        private void ItemChanged(SyncList<Item>.Operation op, int itemIndex)
+        {
+            OnItemChanged?.Invoke(op, itemIndex);
+        }
 
-		public void UseItem(Item item)
-		{
-			CmdUseItem(Items.IndexOf(item));
-		}
+        public bool AddItem(Item item)
+        {
+            if (Items.Count < Space)
+            {
+                Items.Add(item);
+                data.inventory.Add(ItemBase.GetItemId(item));
+                return true;
+            }
 
-		[Command]
-		void CmdUseItem(int index)
-		{
-			if (Items[index] != null)
-			{
-				Items[index].Use(Player);
-			}
-		}
+            return false;
+        }
 
-		public void DropItem(Item item)
-		{
-			CmdDropItem(Items.IndexOf(item));
-		}
+        public void RemoveItem(Item item)
+        {
+            Items.Remove(item);
+            data.inventory.Remove(ItemBase.GetItemId(item));
+        }
 
-		[Command]
-		void CmdDropItem(int index)
-		{
-			if (Items[index] == null) return;
-			Drop(Items[index]);
-			Items.RemoveAt(index);
-		}
+        public void UseItem(Item item)
+        {
+            CmdUseItem(Items.IndexOf(item));
+        }
 
-		private void Drop(Item item)
-		{
-			var pickupItem = Instantiate(item.PickupPrefab, Player.Character.transform.position, 
-				Quaternion.Euler(0, Random.Range(0, 360f), 0));
-			pickupItem.Item = item;
-			NetworkServer.Spawn(pickupItem.gameObject);
-		}
+        [Command]
+        void CmdUseItem(int index)
+        {
+            if (Items[index] != null)
+            {
+                Items[index].Use(Player);
+            }
+        }
 
-		public void RemoveItem(Item item)
-		{
-			Items.Remove(item);
-		}
-	}
+        public void DropItem(Item item)
+        {
+            CmdDropItem(Items.IndexOf(item));
+        }
+
+        [Command]
+        void CmdDropItem(int index)
+        {
+            if (Items[index] == null) return;
+            Drop(Items[index]);
+            RemoveItem(Items[index]);
+        }
+
+        private void Drop(Item item)
+        {
+            var pickupItem = Instantiate(item.PickupPrefab, Player.Character.transform.position,
+                Quaternion.Euler(0, Random.Range(0, 360f), 0));
+            pickupItem.Item = item;
+            NetworkServer.Spawn(pickupItem.gameObject);
+        }
+    }
 }

@@ -3,58 +3,57 @@ using UnityEngine.Networking;
 
 namespace Geekbrains
 {
-	public class PlayerLoader : NetworkBehaviour
-	{
-		[SerializeField] private GameObject _unitPrefab;
-		[SerializeField] private PlayerController _controller;
-		[SerializeField] private Player _player;
+    public class PlayerLoader : NetworkBehaviour
+    {
+        [SerializeField] private GameObject _unitPrefab;
+        [SerializeField] private PlayerController _controller;
+        [SerializeField] private Player _player;
 
-		[SyncVar(hook = nameof(HookUnitIdentity))]
-		private NetworkIdentity _unitIdentity;
+        [TargetRpc]
+        void TargetLinkCharacter(NetworkConnection target, NetworkIdentity unit)
+        {
+            Character character = unit.GetComponent<Character>();
+            _player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
+            _controller.SetCharacter(character, true);
+        }
 
-		public override void OnStartAuthority()
-		{
-			if (isServer)
-			{
-				var character = CreateCharacter();
-				_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
-				_controller.SetCharacter(character, true);
-			}
-			else
-			{
-				CmdCreatePlayer();
-			}
-		}
+        public override void OnStartAuthority()
+        {
+            CmdCreatePlayer();
+        }
 
-		[Command]
-		public void CmdCreatePlayer()
-		{
-			var character = CreateCharacter();
-			_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), false);
-			_controller.SetCharacter(character, false);
-		}
+        [Command]
+        public void CmdCreatePlayer()
+        {
+            Character character = CreateCharacter();
+            _player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), isLocalPlayer);
+            _controller.SetCharacter(character, isLocalPlayer);
+        }
 
-		[ClientCallback]
-		private void HookUnitIdentity(NetworkIdentity unit)
-		{
-			if (isLocalPlayer)
-			{
-				_unitIdentity = unit;
-				var character = unit.GetComponent<Character>();
-				//_controller.SetCharacter(character, true);
-				_player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
-				_controller.SetCharacter(character, true);
-			}
-		}
+        public Character CreateCharacter()
+        {
+            // получаем аккаунт из менеджера аккаунтов по связи с клиентом
+            UserAccount acc = AccountManager.GetAccount(connectionToClient);
 
-		public Character CreateCharacter()
-		{
-			var unit = Instantiate(_unitPrefab);
-			NetworkServer.Spawn(unit);
-			_unitIdentity = unit.GetComponent<NetworkIdentity>();
-			return unit.GetComponent<Character>();
-		}
+            // создаем персонажа в позиции из пользовательских данных
+            GameObject unit = Instantiate(_unitPrefab, acc.data.posCharacter, Quaternion.identity);
 
-		public override bool OnCheckObserver(NetworkConnection connection) => false;
-	}
+            NetworkServer.Spawn(unit);
+            TargetLinkCharacter(connectionToClient, unit.GetComponent<NetworkIdentity>());
+            return unit.GetComponent<Character>();
+        }
+
+        public override bool OnCheckObserver(NetworkConnection connection) => false;
+
+        private void OnDestroy()
+        {
+            if (isServer && _player.Character != null)
+            {
+                UserAccount acc = AccountManager.GetAccount(connectionToClient);
+                acc.data.posCharacter = _player.Character.transform.position;
+                Destroy(_player.Character.gameObject);
+                NetworkManager.singleton.StartCoroutine(acc.Quit());
+            }
+        }
+    }
 }

@@ -72,7 +72,8 @@ public class MyNetworkManager : NetworkManager
     IEnumerator LoginUser(NetworkMessage netMsg)
     {
         UserMessage msg = netMsg.ReadMessage<UserMessage>();
-        IEnumerator e = DCF.Login(msg.login, msg.pass);
+        UserAccount account = new UserAccount(netMsg.conn);
+        IEnumerator e = account.Login(msg.login, msg.pass);
 
         while (e.MoveNext())
         {
@@ -84,7 +85,7 @@ public class MyNetworkManager : NetworkManager
         {
             Debug.Log("server login success");
             // продолжение последовательности подключения
-            netMsg.conn.Send(MsgType.Scene, new StringMessage(SceneManager.GetActiveScene().name));
+            netMsg.conn.Send(MsgType.Scene, new StringMessage(onlineScene));
         }
         else
         {

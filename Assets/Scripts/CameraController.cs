@@ -12,7 +12,7 @@ namespace Geekbrains
 		[SerializeField] private float _pitch = 2f;
 
 		private Transform _transform;
-		private float _currentZoom = 10f;
+		private float _currentZoom = 15f;
 		private float _currentRot = 0f;
 		private float _prevMouseX;
 
