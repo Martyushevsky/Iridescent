@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractionTransform: {fileID: 4346772114021060}
-  Radius: 6
+  radius: 2
   Motor: {fileID: 114164667048318260}
   _stats: {fileID: 114748287497134970}
   _moveRadius: 10
@@ -717,6 +717,7 @@ MonoBehaviour:
   _aggressive: 0
   _rewardExp: 20
   _viewDistance: 10
+  _agroDistance: 5
   _reviveDelay: 5
 --- !u!114 &5805137286477494061
 MonoBehaviour:
@@ -779,6 +780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 1
+  attackDistance: 1
 --- !u!114 &3238937441097433647
 MonoBehaviour:
   m_ObjectHideFlags: 0

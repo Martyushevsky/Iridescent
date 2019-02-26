@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 455}
   - component: {fileID: 6161765413696865469}
   - component: {fileID: 448}
-  - component: {fileID: 407143196894333655}
   m_Layer: 10
   m_Name: Player Unit Robot
   m_TagString: Untagged
@@ -80,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractionTransform: {fileID: 255}
-  radius: 2
+  Radius: 6
   Motor: {fileID: 461}
   _stats: {fileID: 1771878869545565714}
   _reviveDelay: 5
@@ -256,7 +255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 1
-  attackDistance: 1
 --- !u!65 &6161765413696865469
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -285,23 +283,6 @@ MonoBehaviour:
   _animator: {fileID: 408}
   _unit: {fileID: 453}
   _combat: {fileID: 455}
---- !u!114 &407143196894333655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a846d6e965a97f45acab22e515c4217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visRange: 35
-  visUpdateInterval: 1
-  visMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!1 &187
 GameObject:
   m_ObjectHideFlags: 0

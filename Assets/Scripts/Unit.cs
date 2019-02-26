@@ -11,6 +11,7 @@ namespace Geekbrains
         public UnitStats Stats => _stats;
 
         protected Interactable Focus;
+        protected float InteractDistance;
 
         protected bool IsDead;
 
@@ -67,6 +68,12 @@ namespace Geekbrains
             return base.Interact(user);
         }
 
+        public override float GetInteractDistance(GameObject user)
+        {
+            Combat combat = user.GetComponent<Combat>();
+            return base.GetInteractDistance(user) + (combat != null ? combat.attackDistance : 0f);
+        }
+
         protected virtual void DamageWithCombat(GameObject user)
         {
             EventOnDamage?.Invoke();
@@ -76,7 +83,8 @@ namespace Geekbrains
         {
             if (newFocus == Focus) return;
             Focus = newFocus;
-            Motor.FollowTarget(newFocus);
+            InteractDistance = Focus.GetInteractDistance(gameObject);
+            Motor.FollowTarget(newFocus, InteractDistance);
         }
 
         protected virtual void RemoveFocus()

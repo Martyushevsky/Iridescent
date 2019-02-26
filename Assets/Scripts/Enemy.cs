@@ -18,7 +18,9 @@ namespace Geekbrains
         [SerializeField] private bool _aggressive;
         [SerializeField] private float _rewardExp;
         [SerializeField] private float _viewDistance = 5f;
+        [SerializeField] private float _agroDistance = 5f;
         [SerializeField] private float _reviveDelay = 5f;
+
 
 
         private float _reviveTime;
@@ -69,7 +71,7 @@ namespace Geekbrains
                     // если цель далеко перестаём преследовать
                     RemoveFocus();
                 }
-                else if (distance <= Focus.Radius)
+                else if (distance <= InteractDistance)
                 {
                     // действие если цель в зоне взаимодействия
                     if (!Focus.Interact(gameObject)) RemoveFocus();
@@ -100,7 +102,7 @@ namespace Geekbrains
 
         private void FindEnemy()
         {
-            var colliders = Physics.OverlapSphere(transform.position, _viewDistance, 1 << LayerMask.NameToLayer("Player"));
+            var colliders = Physics.OverlapSphere(transform.position, _agroDistance, 1 << LayerMask.NameToLayer("Player"));
             foreach (var t in colliders)
             {
                 var interactable = t.GetComponent<Interactable>();

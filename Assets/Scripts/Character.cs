@@ -61,7 +61,7 @@ namespace Geekbrains
             else
             {
                 var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
-                if (distance <= Focus.Radius)
+                if (distance <= InteractDistance)
                 {
                     if (!Focus.Interact(gameObject)) RemoveFocus();
                 }

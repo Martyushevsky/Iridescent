@@ -33,13 +33,13 @@ namespace Geekbrains
 			transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 		}
 
-		public void FollowTarget(Interactable newTarget)
-		{
-			_agent.stoppingDistance = newTarget.Radius;
-			_target = newTarget.InteractionTransform;
-		}
+        public void FollowTarget(Interactable newTarget, float interactDistance)
+        {
+            _agent.stoppingDistance = interactDistance;
+            _target = newTarget.InteractionTransform;
+        }
 
-		public void StopFollowingTarget()
+        public void StopFollowingTarget()
 		{
 			_agent.stoppingDistance = 0f;
 			_agent.ResetPath();

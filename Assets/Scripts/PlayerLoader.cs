@@ -5,7 +5,6 @@ namespace Geekbrains
 {
     public class PlayerLoader : NetworkBehaviour
     {
-        [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private PlayerController _controller;
         [SerializeField] private Player _player;
 
@@ -32,15 +31,17 @@ namespace Geekbrains
 
         public Character CreateCharacter()
         {
-            // получаем аккаунт из менеджера аккаунтов по связи с клиентом
             UserAccount acc = AccountManager.GetAccount(connectionToClient);
-
-            // создаем персонажа в позиции из пользовательских данных
-            GameObject unit = Instantiate(_unitPrefab, acc.data.posCharacter, Quaternion.identity);
-
+            GameObject unitPrefab = NetworkManager.singleton.spawnPrefabs.Find(x => x.GetComponent<NetworkIdentity>().assetId.Equals(acc.data.characterHash));
+            GameObject unit = Instantiate(unitPrefab, acc.data.posCharacter, Quaternion.identity);
+            // указываем объект игрока для определения видимости персонажа
+            Character character = unit.GetComponent<Character>();
+            character.Player = _player;
+            // реплицируем персонажа
             NetworkServer.Spawn(unit);
+            // настраиваем персонажа на клиенте, которому он принадлежит
             TargetLinkCharacter(connectionToClient, unit.GetComponent<NetworkIdentity>());
-            return unit.GetComponent<Character>();
+            return character;
         }
 
         public override bool OnCheckObserver(NetworkConnection connection) => false;

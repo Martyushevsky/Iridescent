@@ -7,8 +7,9 @@ namespace Geekbrains
 	public class Combat : NetworkBehaviour
 	{
 		[SerializeField] private float _attackSpeed = 1f;
+        public float attackDistance = 0f;
 
-		private UnitStats _myStats;
+        private UnitStats _myStats;
 		private float _attackCooldown = 0f;
 
 		public delegate void CombatDenegate();

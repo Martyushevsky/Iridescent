@@ -52,7 +52,7 @@ public class UserAccount
         }
         else
         {
-            Debug.Log("server login fail");
+            Debug.Log("server login fail. " + response);
             yield return eLogin.Current;
         }
     }
@@ -114,6 +114,7 @@ public class UserAccount
 [Serializable]
 public class UserData
 {
+    public NetworkHash128 characterHash = new NetworkHash128();
     public Vector3 posCharacter;
     public List<int> inventory = new List<int>();
     public List<int> equipment = new List<int>();

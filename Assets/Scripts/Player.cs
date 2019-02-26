@@ -17,6 +17,18 @@ namespace Geekbrains
         public Equipment Equipment => _equipment;
         public PlayerProgress Progress => _progress;
 
+        public NetworkConnection Conn
+        {
+            get
+            {
+                if (_conn == null)
+                    _conn = GetComponent<NetworkIdentity>().connectionToClient;
+                return _conn;
+            }
+        }
+
+        NetworkConnection _conn;
+
         public void Setup(Character character, Inventory inventory, Equipment equipment, bool isLocalPlayer)
         {
             Debug.Log("setup");
