@@ -26,7 +26,7 @@ namespace Geekbrains
                 if (isServer)
                 {
                     Stats.SetHealthRate(1);
-                    Motor.MoveToPoint(_startPosition);
+                    _motor.MoveToPoint(_startPosition);
                 }
             }
         }
@@ -53,17 +53,17 @@ namespace Geekbrains
         protected override void OnAliveUpdate()
         {
             base.OnAliveUpdate();
-            if (Focus == null) return;
-            if (!Focus.HasInteract)
+            if (_focus == null) return;
+            if (!_focus.HasInteract)
             {
                 RemoveFocus();
             }
             else
             {
-                var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
+                var distance = Vector3.Distance(_focus.InteractionTransform.position, transform.position);
                 if (distance <= InteractDistance)
                 {
-                    if (!Focus.Interact(gameObject)) RemoveFocus();
+                    if (!_focus.Interact(gameObject)) RemoveFocus();
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace Geekbrains
             _gfx.SetActive(true);
             if (isServer)
             {
-                Motor.MoveToPoint(_startPosition);
+                _motor.MoveToPoint(_startPosition);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Geekbrains
             if (!IsDead)
             {
                 RemoveFocus();
-                Motor.MoveToPoint(point);
+                _motor.MoveToPoint(point);
             }
         }
 

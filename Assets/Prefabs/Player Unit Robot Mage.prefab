@@ -81,8 +81,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractionTransform: {fileID: 2553854198016343898}
   radius: 2
-  Motor: {fileID: 2553854198016343656}
+  _motor: {fileID: 2553854198016343656}
   _stats: {fileID: 4316672398908703159}
+  unitSkills:
+    _skills: []
   _reviveDelay: 5
   _gfx: {fileID: 2553854198016343838}
   Player: {fileID: 0}

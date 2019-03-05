@@ -56,7 +56,7 @@ namespace Geekbrains
         protected override void OnAliveUpdate()
         {
             base.OnAliveUpdate();
-            if (Focus == null)
+            if (_focus == null)
             {
                 // блуждание
                 Wandering(Time.deltaTime);
@@ -65,8 +65,8 @@ namespace Geekbrains
             }
             else
             {
-                var distance = Vector3.Distance(Focus.InteractionTransform.position, transform.position);
-                if (distance > _viewDistance || !Focus.HasInteract)
+                var distance = Vector3.Distance(_focus.InteractionTransform.position, transform.position);
+                if (distance > _viewDistance || !_focus.HasInteract)
                 {
                     // если цель далеко перестаём преследовать
                     RemoveFocus();
@@ -74,7 +74,7 @@ namespace Geekbrains
                 else if (distance <= InteractDistance)
                 {
                     // действие если цель в зоне взаимодействия
-                    if (!Focus.Interact(gameObject)) RemoveFocus();
+                    if (!_focus.Interact(gameObject)) RemoveFocus();
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Geekbrains
             transform.position = _startPosition;
             if (isServer)
             {
-                Motor.MoveToPoint(_startPosition);
+                _motor.MoveToPoint(_startPosition);
             }
         }
 
@@ -123,22 +123,20 @@ namespace Geekbrains
         private void RandomMove()
         {
             _curDestination = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up) * new Vector3(_moveRadius, 0, 0) + _startPosition;
-            Motor.MoveToPoint(_curDestination);
+            _motor.MoveToPoint(_curDestination);
         }
-
-        public override bool Interact(GameObject user)
-        {
-            if (!base.Interact(user)) return false;
-            SetFocus(user.GetComponent<Interactable>());
-            return true;
-        }
-
+        
         protected override void DamageWithCombat(GameObject user)
         {
             base.DamageWithCombat(user);
-            var character = user.GetComponent<Character>();
-            if (character != null && !_enemies.Contains(character))
-                _enemies.Add(character);
+            Unit enemy = user.GetComponent<Unit>();
+            if (enemy != null)
+            {
+                SetFocus(enemy.GetComponent<Interactable>());
+                Character character = enemy as Character;
+                if (character != null && !_enemies.Contains(character))
+                    _enemies.Add(character);
+            }
         }
 
         protected override void OnDrawGizmosSelected()

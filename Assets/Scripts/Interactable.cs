@@ -7,7 +7,7 @@ namespace Geekbrains
     {
         public Transform InteractionTransform;
 
-        public bool HasInteract { get; protected set; } = true;
+        public bool HasInteract { get; set; } = true;
 
         public virtual bool Interact(GameObject user) => false;
 

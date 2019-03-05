@@ -5,12 +5,16 @@ namespace Geekbrains
 {
     public class Unit : Interactable
     {
-        [SerializeField] protected UnitMotor Motor;
+        [SerializeField] protected UnitMotor _motor;
         [SerializeField] protected UnitStats _stats;
-
         public UnitStats Stats => _stats;
+        public UnitMotor Motor => _motor;
 
-        protected Interactable Focus;
+        protected Interactable _focus;
+        public Interactable Focus => _focus;
+
+        public UnitSkills unitSkills;
+
         protected float InteractDistance;
 
         protected bool IsDead;
@@ -22,8 +26,8 @@ namespace Geekbrains
 
         public override void OnStartServer()
         {
-            Motor.SetMoveSpeed(_stats.MoveSpeed.GetValue());
-            _stats.MoveSpeed.OnStatChanged += Motor.SetMoveSpeed;
+            _motor.SetMoveSpeed(_stats.MoveSpeed.GetValue());
+            _stats.MoveSpeed.OnStatChanged += _motor.SetMoveSpeed;
         }
 
         private void Update()
@@ -79,18 +83,32 @@ namespace Geekbrains
             EventOnDamage?.Invoke();
         }
 
-        protected virtual void SetFocus(Interactable newFocus)
+        public void TakeDamage(GameObject user, int damage)
         {
-            if (newFocus == Focus) return;
-            Focus = newFocus;
-            InteractDistance = Focus.GetInteractDistance(gameObject);
-            Motor.FollowTarget(newFocus, InteractDistance);
+            _stats.TakeDamage(damage);
+            DamageWithCombat(user);
         }
 
-        protected virtual void RemoveFocus()
+        public virtual void SetFocus(Interactable newFocus)
         {
-            Focus = null;
-            Motor.StopFollowingTarget();
+            if (newFocus == _focus) return;
+            _focus = newFocus;
+            InteractDistance = _focus.GetInteractDistance(gameObject);
+            _motor.FollowTarget(newFocus, InteractDistance);
+        }
+
+        public virtual void RemoveFocus()
+        {
+            _focus = null;
+            _motor.StopFollowingTarget();
+        }
+
+        public void UseSkill(int skillNum)
+        {
+            if (!IsDead && skillNum < unitSkills.Count)
+            {
+                unitSkills[skillNum].Use(this);
+            }
         }
 
         protected virtual void Die()
@@ -101,7 +119,7 @@ namespace Geekbrains
             if (!isServer) return;
             HasInteract = false; // с объектом нельзя взаимодействовать
             RemoveFocus();
-            Motor.MoveToPoint(transform.position);
+            _motor.MoveToPoint(transform.position);
             RpcDie();
         }
 

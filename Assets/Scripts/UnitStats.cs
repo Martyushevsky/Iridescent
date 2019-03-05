@@ -33,6 +33,12 @@ namespace Geekbrains
             }
         }
 
+        public void AddHealth(int amount)
+        {
+            _curHealth += amount;
+            if (_curHealth > _maxHealth) _curHealth = _maxHealth;
+        }
+
         public void SetHealthRate(float rate)
         {
             CurHealth = rate == 0 ? 0 : (int)(_maxHealth / rate);
