@@ -6,7 +6,12 @@ namespace Geekbrains
     public class UnitStats : NetworkBehaviour
     {
         [SerializeField] private int _maxHealth;
-        [SyncVar] private int _curHealth;
+        [SyncVar(hook = "HealthHook")] private int _curHealth;
+
+        void HealthHook(int newHealth)
+        {
+            _curHealth = newHealth;
+        }
 
         public Stat Damage;
         public Stat Armor; // защита

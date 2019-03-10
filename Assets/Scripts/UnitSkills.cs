@@ -15,6 +15,32 @@ namespace Geekbrains
 
         public int Count { get { return _skills.Length; } }
 
+        UserData data;
+
+        public void Load(UserData data)
+        {
+            this.data = data;
+            for (int i = 0; i < _skills.Length; i++)
+            {
+                UpgradeableSkill skill = _skills[i] as UpgradeableSkill;
+                if (i >= data.skills.Count) data.skills.Add(skill.level);
+                else skill.level = data.skills[i];
+                skill.onSetLevel += ChangeLevel;
+            }
+        }
+
+        void ChangeLevel(UpgradeableSkill skill, int newLevel)
+        {
+            for (int i = 0; i < _skills.Length; i++)
+            {
+                if (_skills[i] == skill)
+                {
+                    data.skills[i] = newLevel;
+                    break;
+                }
+            }
+        }
+
         public bool inCast
         {
             get

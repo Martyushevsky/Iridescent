@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300030, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
-  castTime: 0.2
+  castTime: 1
   cooldown: 0.8
   castDelay: 0
   cooldownDelay: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300034, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
-  castTime: 0
+  castTime: 2
   cooldown: 3
   castDelay: 0
   cooldownDelay: 0
@@ -3746,6 +3746,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealAura
       objectReference: {fileID: 0}
+    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8855939211015074046, guid: b57a68207c085044f90ab3692c4d5df6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3801,21 +3816,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7755841082663917130, guid: b57a68207c085044f90ab3692c4d5df6,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b57a68207c085044f90ab3692c4d5df6, type: 3}
 --- !u!4 &4545506545986122922 stripped
@@ -3841,6 +3841,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StrikeAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543531353131245985, guid: fd9c6fefc113dca4b9838e3250eeae79,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3940731898616149387, guid: fd9c6fefc113dca4b9838e3250eeae79,
         type: 3}
@@ -3895,11 +3900,6 @@ PrefabInstance:
     - target: {fileID: 3940731898616149387, guid: fd9c6fefc113dca4b9838e3250eeae79,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6543531353131245985, guid: fd9c6fefc113dca4b9838e3250eeae79,
-        type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

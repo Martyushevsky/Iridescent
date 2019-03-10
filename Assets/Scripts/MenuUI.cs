@@ -5,6 +5,7 @@ public class MenuUI : MonoBehaviour
 {
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject healthBar;
+    [SerializeField] GameObject skillsPanel;
 
     private void Start()
     {
@@ -12,7 +13,8 @@ public class MenuUI : MonoBehaviour
         {
             menuPanel.SetActive(false);
             healthBar.SetActive(false);
-        }            
+            skillsPanel.SetActive(false);
+        }
     }
 
     public void Disconnect()

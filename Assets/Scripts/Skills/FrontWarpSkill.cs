@@ -5,9 +5,18 @@ using UnityEngine;
 namespace Geekbrains
 {
 
-    public class FrontWarpSkill : Skill
+    public class FrontWarpSkill : UpgradeableSkill
     {
         [SerializeField] float warpDistance = 7f;
+
+        public override int level
+        {
+            set
+            {
+                base.level = value;
+                warpDistance = 7f + 0.5f * level;
+            }
+        }
 
         protected override void OnUse()
         {

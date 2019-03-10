@@ -1,15 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Geekbrains
 {
-    public class AuraStrikeSkill : Skill
+    public class ElectroShieldSkill : UpgradeableSkill
     {
         [SerializeField] int damage;
         [SerializeField] float radius;
         [SerializeField] LayerMask enemyMask;
-        [SerializeField] ParticleSystem auraEffect;
+        [SerializeField] ParticleSystem electroEffect;
+
+        public override int level
+        {
+            set
+            {
+                base.level = value;
+                damage = 25 + 5 * level;
+            }
+        }
 
         protected override void OnUse()
         {
@@ -28,13 +35,12 @@ namespace Geekbrains
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     Unit enemy = colliders[i].GetComponent<Unit>();
-                    if (enemy != null && enemy.HasInteract)
-                        enemy.TakeDamage(unit.gameObject, damage);
+                    if (enemy != null && enemy.HasInteract) enemy.TakeDamage(unit.gameObject, damage);
                 }
             }
             else
             {
-                auraEffect.Play();
+                electroEffect.Play();
             }
             base.OnCastComplete();
         }

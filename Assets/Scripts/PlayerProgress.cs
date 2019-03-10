@@ -6,6 +6,7 @@ namespace Geekbrains
     {
         private int _level = 1; // уровень персонажа
         private int _statPoints; // количество свободных очков характеристик для прокачки характеристик
+        private int _skillPoints;
         private float _exp; // текущее количество опыта
         private float _nextLevelExp = 100; // опыт, необходимый для взятия следующего уровня
 
@@ -16,6 +17,7 @@ namespace Geekbrains
             this.data = data;
             if (data.level > 0) _level = data.level;
             _statPoints = data.statPoints;
+            _skillPoints = data.skillPoints;
             _exp = data.exp;
             if (data.nextLevelExp > 0) _nextLevelExp = data.nextLevelExp;
         }
@@ -36,6 +38,7 @@ namespace Geekbrains
                 _manager.NextLevelExp = _nextLevelExp;
                 _manager.Level = _level;
                 _manager.StatPoints = _statPoints;
+                _manager.skillPoints = _skillPoints;
             }
         }
 
@@ -44,6 +47,7 @@ namespace Geekbrains
             data.level = ++_level;
             data.nextLevelExp = _nextLevelExp += 100f;
             data.statPoints = _statPoints += 3;
+            data.skillPoints = _skillPoints += 1;
         }
 
         // менеджер характеристик
@@ -59,6 +63,7 @@ namespace Geekbrains
                 _manager.NextLevelExp = _nextLevelExp;
                 _manager.Level = _level;
                 _manager.StatPoints = _statPoints;
+                _manager.skillPoints = _skillPoints;
             }
         }
 
@@ -68,6 +73,17 @@ namespace Geekbrains
             {
                 data.statPoints = --_statPoints;
                 if (_manager != null) _manager.StatPoints = _statPoints;
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveSkillPoint()
+        {
+            if (_skillPoints > 0)
+            {
+                data.skillPoints = --_skillPoints;
+                if (_manager != null) _manager.skillPoints = _skillPoints;
                 return true;
             }
             return false;

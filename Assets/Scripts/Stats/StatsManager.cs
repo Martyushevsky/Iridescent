@@ -5,7 +5,7 @@ namespace Geekbrains
     public class StatsManager : NetworkBehaviour
     {
         [SyncVar] public int Damage, Armor, MoveSpeed;
-        [SyncVar] public int Level, StatPoints;
+        [SyncVar] public int Level, StatPoints, skillPoints;
         [SyncVar] public float Exp, NextLevelExp;
         public Player Player;
 
@@ -19,6 +19,19 @@ namespace Geekbrains
                     case (int)StatType.Damage: Player.Character.Stats.Damage.BaseValue++; break;
                     case (int)StatType.Armor: Player.Character.Stats.Armor.BaseValue++; break;
                     case (int)StatType.MoveSpeed: Player.Character.Stats.MoveSpeed.BaseValue++; break;
+                }
+            }
+        }
+
+        [Command]
+        public void CmdUpgradeSkill(int index)
+        {
+            if (Player.Progress.RemoveSkillPoint())
+            {
+                UpgradeableSkill skill = Player.Character.unitSkills[index] as UpgradeableSkill;
+                if (skill != null)
+                {
+                    skill.level++;
                 }
             }
         }

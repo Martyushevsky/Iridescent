@@ -23,7 +23,6 @@ namespace Geekbrains
             if (isLocalPlayer)
             {
                 _cam.GetComponent<CameraController>().Target = character.transform;
-                SkillsPanel.instance.SetSkills(character.unitSkills);
             }
         }
 

@@ -46,6 +46,7 @@ namespace Geekbrains
             {
                 UserAccount account = AccountManager.GetAccount(GetComponent<NetworkIdentity>().connectionToClient);
                 _character.Stats.Load(account.data);
+                _character.unitSkills.Load(account.data);
                 _progress.Load(account.data);
                 _inventory.Load(account.data);
                 _equipment.Load(account.data);
@@ -60,6 +61,9 @@ namespace Geekbrains
                 InventoryUI.Instance.SetInventory(_inventory);
                 EquipmentUI.Instance.SetEquipment(_equipment);
                 StatsUI.instance.SetManager(_statsManager);
+                SkillsPanel.instance.SetSkills(character.unitSkills);
+                SkillTree.instance.SetCharacter(character);
+                SkillTree.instance.SetManager(_statsManager);
             }
         }
     }

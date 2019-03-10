@@ -9,7 +9,6 @@ using DatabaseControl;
 
 public class UserAccount
 {
-
     public string login, pass;
     public UserData data;
     public NetworkConnection conn;
@@ -118,8 +117,9 @@ public class UserData
     public Vector3 posCharacter;
     public List<int> inventory = new List<int>();
     public List<int> equipment = new List<int>();
+    public List<int> skills = new List<int>();
 
-    public int level, statPoints;
+    public int level, statPoints, skillPoints;
     public float exp, nextLevelExp;
 
     public int curHealth;
