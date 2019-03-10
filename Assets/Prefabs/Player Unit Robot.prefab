@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 8669564385032637268}
   - component: {fileID: 2017912071259112386}
   - component: {fileID: 2555808001329825738}
+  - component: {fileID: 6720314861814203083}
   m_Layer: 10
   m_Name: Player Unit Robot
   m_TagString: Untagged
@@ -372,6 +373,19 @@ MonoBehaviour:
   cooldownDelay: 0
   healAmount: 15
   particle: {fileID: 3337228394661597726}
+--- !u!114 &6720314861814203083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5f7948dc060be4ab0842d4389a3657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Local
 --- !u!1 &187
 GameObject:
   m_ObjectHideFlags: 0

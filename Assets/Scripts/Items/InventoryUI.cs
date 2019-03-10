@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Geekbrains
 {
@@ -28,7 +29,7 @@ namespace Geekbrains
 
 		private void Update()
 		{
-			if (Input.GetButtonDown("Inventory"))
+			if (Input.GetButtonDown("Inventory") && EventSystem.current.currentSelectedGameObject == null)
 			{
 				_inventoryUi.SetActive(!_inventoryUi.activeSelf);
 			}

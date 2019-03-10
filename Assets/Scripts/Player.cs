@@ -64,6 +64,16 @@ namespace Geekbrains
                 SkillsPanel.instance.SetSkills(character.unitSkills);
                 SkillTree.instance.SetCharacter(character);
                 SkillTree.instance.SetManager(_statsManager);
+
+                PlayerChat playerChat = GetComponent<PlayerChat>();
+                if (playerChat != null)
+                {
+                    if (GlobalChatChannel.instance != null)
+                        playerChat.RegisterChannel(GlobalChatChannel.instance);
+                    ChatChannel localChannel = _character.GetComponent<ChatChannel>();
+                    if (localChannel != null) playerChat.RegisterChannel(localChannel);
+                    ChatUI.instance.SetPlayerChat(playerChat);
+                }
             }
         }
     }

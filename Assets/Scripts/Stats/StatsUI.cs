@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Geekbrains
 {
@@ -42,7 +43,7 @@ namespace Geekbrains
 
         void Update()
         {
-            if (Input.GetButtonDown("Stats"))
+            if (Input.GetButtonDown("Stats") && EventSystem.current.currentSelectedGameObject == null)
             {
                 _statsUi.SetActive(!_statsUi.activeSelf);
             }
