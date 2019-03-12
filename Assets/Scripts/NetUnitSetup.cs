@@ -1,27 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	public class NetUnitSetup : NetworkBehaviour
-	{
-		[SerializeField] private MonoBehaviour[] _disableBehaviours;
+public class NetUnitSetup : NetworkBehaviour {
 
-		private void Awake()
-		{
-			if (hasAuthority) return;
-			foreach (var behaviour in _disableBehaviours)
-			{
-				behaviour.enabled = false;
-			}
-		}
+    [SerializeField] MonoBehaviour[] disableBehaviours;
 
-		public override void OnStartAuthority()
-		{
-			foreach (var behaviour in _disableBehaviours)
-			{
-				behaviour.enabled = true;
-			}
-		}
+	void Awake() {
+        if (!hasAuthority) {
+            for (int i = 0; i < disableBehaviours.Length; i++) {
+                disableBehaviours[i].enabled = false;
+            }
+        }
 	}
+
+    public override void OnStartAuthority() {
+        for (int i = 0; i < disableBehaviours.Length; i++) {
+            disableBehaviours[i].enabled = true;
+        }
+    }
 }
